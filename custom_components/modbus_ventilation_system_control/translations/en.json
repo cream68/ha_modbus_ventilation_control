@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up modbus ventilation system control",
+        "description": "Connect the Waveshare DAC controller to Home Assistant.",
+        "data": {
+          "host": "IP address",
+          "port": "Modbus port",
+          "slave_id": "Slave ID",
+          "poll_interval": "Poll interval in seconds"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Adjust connection",
+        "description": "Adjust network and polling settings.",
+        "data": {
+          "host": "IP address",
+          "port": "Modbus port",
+          "slave_id": "Slave ID",
+          "poll_interval": "Poll interval in seconds"
+        }
+      }
+    }
+  }
+}

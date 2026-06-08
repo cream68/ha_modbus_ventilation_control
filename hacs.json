@@ -1,0 +1,9 @@
+{
+  "name": "modbus ventilation system control",
+  "country": "DE",
+  "domains": [
+    "modbus_ventilation_system_control"
+  ],
+  "homeassistant": "2026.6.0",
+  "render_readme": true
+}

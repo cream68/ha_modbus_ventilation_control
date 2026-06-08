@@ -1,0 +1,12 @@
+{
+  "domain": "modbus_ventilation_system_control",
+  "name": "modbus ventilation system control",
+  "version": "0.1.0",
+  "documentation": "https://www.home-assistant.io/",
+  "requirements": [
+    "pymodbus>=3.8.3,<4"
+  ],
+  "codeowners": [],
+  "config_flow": true,
+  "iot_class": "local_polling"
+}
