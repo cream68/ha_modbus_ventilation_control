@@ -41,6 +41,7 @@ class VentilationData:
     connected: bool
     status: str
     last_error: str | None
+    last_successful_read: datetime | None
 
 
 class VentilationCoordinator(DataUpdateCoordinator[VentilationData]):
@@ -95,6 +96,7 @@ class VentilationCoordinator(DataUpdateCoordinator[VentilationData]):
             connected=False,
             status="unbekannt",
             last_error=None,
+            last_successful_read=None,
         )
 
         target_output = self._manual_output
@@ -110,6 +112,7 @@ class VentilationCoordinator(DataUpdateCoordinator[VentilationData]):
                 connected=True,
                 status=status,
                 last_error=None,
+                last_successful_read=dt_util.now(),
             )
         except Exception as err:  # noqa: BLE001
             message = str(err)
@@ -120,6 +123,7 @@ class VentilationCoordinator(DataUpdateCoordinator[VentilationData]):
                 connected=False,
                 status="fehler",
                 last_error=message,
+                last_successful_read=previous.last_successful_read,
             )
 
     @property

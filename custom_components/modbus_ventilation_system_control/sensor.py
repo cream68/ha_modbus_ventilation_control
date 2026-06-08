@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
@@ -18,12 +19,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         CurrentOutputSensor(coordinator, entry),
         TargetOutputSensor(coordinator, entry),
         StatusSensor(coordinator, entry),
+        LastReadSensor(coordinator, entry),
     ])
 
 
 class CurrentOutputSensor(VentilationEntity, SensorEntity):
     _attr_name = "CH1 aktuell"
     _attr_native_unit_of_measurement = "mA"
+    _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_suggested_object_id = "lueftungsanlage_ch1_ausgang"
 
     def __init__(self, coordinator, entry) -> None:
@@ -38,6 +41,7 @@ class CurrentOutputSensor(VentilationEntity, SensorEntity):
 class TargetOutputSensor(VentilationEntity, SensorEntity):
     _attr_name = "Zielwert"
     _attr_native_unit_of_measurement = "mA"
+    _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_suggested_object_id = "lueftungsanlage_zielwert"
 
@@ -69,3 +73,18 @@ class StatusSensor(VentilationEntity, SensorEntity):
             "connected": self.coordinator.data.connected,
             "last_error": self.coordinator.data.last_error,
         }
+
+
+class LastReadSensor(VentilationEntity, SensorEntity):
+    _attr_name = "Letzte Aktualisierung"
+    _attr_device_class = "timestamp"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_suggested_object_id = "lueftungsanlage_letzte_aktualisierung"
+
+    def __init__(self, coordinator, entry) -> None:
+        super().__init__(coordinator, entry)
+        self._attr_unique_id = f"{entry.entry_id}_last_successful_read"
+
+    @property
+    def native_value(self):
+        return self.coordinator.data.last_successful_read
