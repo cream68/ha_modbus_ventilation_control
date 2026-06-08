@@ -26,7 +26,7 @@ class BaseMilliampNumber(VentilationEntity, NumberEntity):
     _attr_native_max_value = MAX_MILLIAMP
     _attr_native_step = 0.1
     _attr_native_unit_of_measurement = "mA"
-    _attr_mode = NumberMode.BOX
+    _attr_mode = NumberMode.SLIDER
     _attr_entity_category = EntityCategory.DIAGNOSTIC
 
 
